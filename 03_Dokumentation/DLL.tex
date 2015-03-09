@@ -1,0 +1,277 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage{geometry}
+\geometry{a4paper,left=10mm,right=15mm, top=1.2cm, bottom=2cm} % Seitenabstände
+
+
+\usepackage[T1]{fontenc}
+\usepackage[ttdefault=true]{AnonymousPro}
+\renewcommand*\familydefault{\ttdefault}
+
+\usepackage[normalem]{ulem}
+
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{graphicx} % Grafiken einbinden .png etc.
+\usepackage{wrapfig} % Bild umfließen lassen
+\usepackage{xcolor} % Textfarbe
+\definecolor{myGreen}{HTML}{00CC00}
+
+\usepackage{tabularx} % Tabelle
+\usepackage{textcomp}
+
+% set colors for links and URLs
+\usepackage[hyphens]{url}
+\usepackage[
+	colorlinks=true,
+	urlcolor=blue,
+	linkcolor=green
+]{hyperref}
+
+\usepackage{listings}
+\lstset{
+  language=Java,
+  basicstyle=\fontsize{11}{13}\selectfont\ttfamily
+}
+
+\usepackage{enumitem}
+
+\title{Matlab-COM-Dll 64-bit (EasyDoEToolsuitev13\_1\_0.dll)}
+
+\begin{document}
+\shorthandoff{"}
+\date{\vspace{-8ex}}  % cheap and easy solution to removing the spacing
+\author{ }             % without delving into the titling package
+\maketitle
+
+\section*{R2012b - Matlab 64-bit Compiler einrichten}
+
+\newlist{compiler}{enumerate}{2}
+\setlist[compiler,1]{label=}
+\setlist[compiler,2]{label=(\roman*)}
+\begin{compiler}
+	\item \textbf{Matlab R2012b 64-bit} unter \textbf{C:\textbackslash{}} installieren
+	\begin{compiler}
+		\item \textbf{Hinweis:} Der Pfad darf keine Leerzeichen enthalten, da sonst der Aufruf des
+		\\ Matlab Compiler Kommandos (MCC) zum fehlerhaften Auflösen des angegebenen
+		\\ Matlab-Pfades (build script) führen kann und scheitert.
+	\end{compiler}
+	
+	\item \textbf{Microsoft Visual Studio C++ 2010 Express und Microsoft Windows 
+	\\ SDK 7.1 installieren (benötigt .NET Framework 4.0) }
+	\begin{compiler}
+		\item \textbf{Anmerkung (1):} Visual und das SDK müssen zusammen installiert werden.
+		
+		\item \textbf{Anmerkung (2):} SDK 7.1 wurde nach der folgenden offiziellen Matlab-Seite
+		\\ "Supported and Compatible Compilers – Release 2012b": 
+		\\ \url{http://de.mathworks.com/support/compilers/R2012b/win64.html#n3}
+		\\ gewählt. Kostenlos und aktuell empfohlene Compiler-Wahl (08.03.15).
+		
+		\item \textbf{Hinweis:} Die nachfolgende Step-by-Step Anleitung kann auch analog für 
+		\\Microsoft Visual Studio C++ 2010 Professional befolgt werden.
+	\end{compiler}	
+\end{compiler}
+
+\newlist{stepbystep}{enumerate}{4}
+\setlist[stepbystep,1]{label=}
+\setlist[stepbystep,2]{label=\textbf{(\alph*)}}
+\setlist[stepbystep,3]{label=\arabic*.}
+\setlist[stepbystep,4]{label=\textbullet}
+\begin{stepbystep}
+	\item \textbf{Installation - Step-by-Step:}
+	\begin{stepbystep}
+		\item Folgende Schritte befolgen, falls \textbf{Visual Studio} und das \textbf{SDK nicht}
+		\\ \textbf{installiert sind} oder momentan \textbf{nur das SDK installiert ist}:
+		\begin{stepbystep}
+			\item Das \textbf{SDK 7.1 installieren}, falls dies nicht gelingt zu (b) 
+			\\ wechseln und hier die Anweisungen ab Punkt 3 befolgen.
+			
+			\item \textbf{Compiler Update für das Windows SDK 7.1 installieren: } 
+			\\ \url{http://www.microsoft.com/en-us/download/details.aspx?displaylang=en&id=4422}
+		
+			\item \textbf{Microsoft Visual Studio C++ 2010 Express installieren.}
+			
+			\item \textbf{Optional:} Microsoft Visual Studio C++ 2010 Express SP1 installieren.
+			\\
+		\end{stepbystep}
+		
+		\item Folgende Schritte befolgen, falls \textbf{Visual Studio bereits installiert} ist,
+		\\ jedoch das \textbf{SDK 7.1} noch \textbf{fehlt}:
+		\begin{stepbystep}
+			\item \textbf{Microsoft Visual 2010 x86/x64 Redistributable deinstallieren:}
+			\\
+			\begin{stepbystep}
+			\item Microsoft Visual C++ 2010 Redistributable Package (x86): 
+			\\ \url{http://www.microsoft.com/de-de/download/details.aspx?id=14632}
+			\item Microsoft Visual C++ 2010 Redistributable Package (x64): 
+			\\ \url{http://www.microsoft.com/de-de/download/details.aspx?id=5555}
+			\\
+			\\ \textbf{Anmerkung:} Die manuelle Deinstallation wird nicht empfohlen.
+			\\
+			\end{stepbystep}
+			
+			\item \textbf{Microsoft Windows SDK 7.1 \uline{ohne die Visual C++ Compiler} installieren.}
+			
+			\item \textbf{Compiler Update für das Windows SDK 7.1 installieren: } 
+			\\ \url{http://www.microsoft.com/en-us/download/details.aspx?displaylang=en&id=4422}
+			
+			\item \textbf{Microsoft Visual 2010 x86/x64 Redistributable neu installieren.}
+			\\
+		\end{stepbystep}
+		
+		\item Im Fall, dass \textbf{bereits beide Installationen vorliegen} und es während der Kompilierung
+		zu Fehlern kommt, wenden Sie den bei \textbf{(a) unter Punkt 2} vermerkten Patch an.
+		
+	\end{stepbystep}
+\end{stepbystep}
+
+\textbf{Quelle Anleitung} (engl.): \url{http://www.mathworks.com/matlabcentral/answers/96611-how-do-i-install-microsoft-visual-c-2010-and-microsoft-windows-sdk-7-1}
+
+\newpage
+\newlist{mbuild}{enumerate}{3}
+\setlist[mbuild,1]{label=}
+\setlist[mbuild,2]{label=\textbf{(\alph*)}}
+\setlist[mbuild,3]{label=(\roman*)}
+\begin{mbuild}
+	\item \textbf{Matlab (R2012b 64-bit) Compiler umstellen:}
+	\begin{mbuild}
+		\item Folgendes Kommando auf der Matlab-Seite ausführen: 
+		\\ \\
+		\hspace*{5mm} \textbf{mbuild -setup}
+		\\
+		\item Den Compiler "\textbf{Microsoft Visual C++ 2010 Express mit SDK 7.1}" auswählen.
+		\\
+		\begin{mbuild}
+			\item \textbf{Hinweis:} Im Fall, dass der Compiler in der Liste nicht vorhanden ist,
+			\\ führen Sie das Kommando erneut aus und beantworten Sie die Frage:
+			\\
+			\\ \hspace*{2mm} "\textit{Would you like mbuild to locate installed compilers [y]/n?}" mit \textbf{n}
+			\\
+			\\ Es wird Ihnen eine Liste aller möglichen Compiler aufgelistet. Wählen Sie den entsprechenden
+			   Compiler aus und korrigieren Sie ggf. den Pfad um fortzufahren.
+			\\
+		\end{mbuild}
+		
+		\item Nach der Verifizierung Ihrer Wahl ist die Umstellung des Compilers abgeschlossen.
+		\\ \\
+	\end{mbuild}
+\end{mbuild}
+
+\section*{Matlab-COM-Dll 64-bit erzeugen und registrieren}
+
+\newlist{buildDll}{enumerate}{3}
+\setlist[buildDll,1]{label=}
+\setlist[buildDll,2]{label=\textbf{(\alph*)}}
+\setlist[buildDll,3]{label=(\roman*)}
+\begin{buildDll}
+	\item \textbf{Matlab-COM-Dll 64-bit erzeugen}
+	\begin{buildDll}
+	\item Das Bauen kann wahlweise \textbf{Lokal} oder mithilfe von \textbf{Jenkins} erfolgen:
+	\\
+	\\ \textbf{Lokal} sind entsprechende Pfadänderungen an der folgenden Batch-Datei vorzunehmen:
+	\\
+	\\ \hspace*{5mm} \textit{..\textbackslash{}03\_Sourcen\textbackslash{}JenkinsBuild\textbackslash{}}dll-matlab-build.bat
+	\\
+		\begin{buildDll}
+			\item \textbf{Hinweis:} Geben Sie den korrekten Pfad zur Matlab R2012b 64-bit Version an.
+			\\
+		\end{buildDll}
+	\textbf{Zum Erzeugen der DLL} diese Batch-Datei \uline{als Administrator} ausführen 
+	\\ und warten bis der Kompiliervorgang abgeschlossen ist. Die erzeugte DLL- und CTF-Datei
+	   befindet sich ggf. (Pfadänderung) unter folgendem Pfad: 
+	\\ \\
+	   \hspace*{5mm} \textit{..\textbackslash{}03\_Sourcen\textbackslash{}JMatCom\textbackslash{}workDir\textbackslash{}distrib  }
+	\\ \\
+	\textbf{Jenkins Job:} \textit{Toolsuite-Matlab-DLL-Build}
+	\\
+	\end{buildDll}
+\end{buildDll}
+
+\newpage
+
+\newlist{regDll}{enumerate}{4}
+\setlist[regDll,1]{label=}
+\setlist[regDll,2]{label=\textbf{(\alph*)}}
+\setlist[regDll,3]{label=\arabic*.}
+\setlist[regDll,4]{label=\textbullet}
+\begin{regDll}
+	\item \textbf{Matlab-COM-Dll 64-bit registrieren}
+	\begin{regDll}
+		\item Folgende Schritte befolgen, falls \textbf{bereits eine 64-bit oder noch keine EasyDoEToolsuitev13\_1\_0.dll registriert} wurde:
+		\\
+		\begin{regDll}
+			\item Folgende Punkte berücksichtigen, falls bereits eine \textbf{64-bit}
+			\\ \textbf{EasyDoEToolsuitev13\_1\_0.dll registriert} wurde:
+			\\
+			\begin{regDll}
+				\item Mit der 64-bit regsvr32.exe die vorherige DLL abmelden (UnRegister)
+				\\
+				\\ \hspace*{5mm} \textbf{Wichtig:} Das Tool befindet sich unter folgendem Pfad:
+				\\
+				\\ \hspace*{10mm} \textit{C:\textbackslash{}Windows\textbackslash{}System32\textbackslash{}regsvr32.exe}
+				\\
+				
+				\item \textbf{Wichtig:} Ausführen von regsvr32 mit Administrator-Rechten.
+				\\
+				
+				\item \textbf{EasyDoEToolsuitev13\_1\_0 abmelden (UnRegister via Konsole):} 
+				\\
+			   ..\textbackslash{}System32\textbackslash{}regsvr32.exe \textbf{-u}
+			   ..\textbackslash{}v80\textbackslash{}runtime\textbackslash{}win64\textbackslash{}EasyDoEToolsuitev13\_1\_0.dll
+			    \\
+			    
+				\item  \textbf{mwcomutil.dll abmelden (UnRegister via Konsole) }:
+				\\
+			   ..\textbackslash{}System32\textbackslash{}regsvr32.exe \textbf{-u}
+			   ..\textbackslash{}v80\textbackslash{}runtime\textbackslash{}win64\textbackslash{}mwcomutil.dll
+				\\
+				
+				\item Die vorherige \textbf{DLL- und CTF-Datei aus dem MCR-Ordner löschen.}
+				\\
+			\end{regDll}
+		
+			\item Die entsprechende \textbf{DLL- und CTF-Datei in den MCR-Ordner kopieren} 
+			\\ oder verschieben.
+			\\ \\ \textbf{Standard(Default)-MCR-Pfad:}
+			\\
+			\\ \hspace*{5mm} \textit{C:\textbackslash{}Program Files\textbackslash{}MATLAB\textbackslash{}MATLAB Compiler Runtime\textbackslash{}v80\textbackslash{}runtime\textbackslash{}win64}
+			\\ 
+
+			\item \textbf{CTF-Datei entpacken} mit folgendem Tool:
+			\\
+			\\ \hspace*{5mm} C:\textbackslash{}Program Files\textbackslash{}MATLAB\textbackslash{}MATLAB Compiler Runtime\textbackslash{}v80\textbackslash{}bin\textbackslash{}win64\textbackslash{}extractCTF.exe
+			\\
+			\\ \textbf{Entpacken (Konsole):} 
+			\\ \hspace*{5mm} ..\textbackslash{}MATLAB\textbackslash{}MATLAB Compiler Runtime\textbackslash{}v80\textbackslash{}bin\textbackslash{}win64\textbackslash{}extractCTF.exe
+			\\ \hspace*{5mm} ..\textbackslash{}v80\textbackslash{}runtime\textbackslash{}win64\textbackslash{}EasyDoEToolsuitev13.ctf
+			\\
+			
+			\item \textbf{EasyDoE und mwcomutil (DLL) registrieren} (Konsole):
+			\\
+			\begin{regDll}
+			\item \textbf{EasyDoEToolsuitev13\_1\_0.dll registrieren:}
+			\\
+			..\textbackslash{}System32\textbackslash{}regsvr32.exe
+			..\textbackslash{}v80\textbackslash{}runtime\textbackslash{}win64\textbackslash{}EasyDoEToolsuitev13\_1\_0.dll
+			\\
+			\item \textbf{mwcomutil.dll registrieren:}
+			\\
+			..\textbackslash{}System32\textbackslash{}regsvr32.exe
+			..\textbackslash{}v80\textbackslash{}runtime\textbackslash{}win64\textbackslash{}mwcomutil.dll
+			\\
+			
+			\item \textbf{Hinweis:} Die \textbf{64-bit Registrierungseinträge} können mit \textbf{OleView 64-bit} eingesehen und überprüft werden.
+			\\
+			\\ \textbf{OleView 64-bit ist im "Microsoft Windows SDK for Windows 7" enthalten}: 
+			\\ \url{http://www.microsoft.com/en-us/download/details.aspx?id=8279}
+			\\
+			\end{regDll}
+		\end{regDll}
+		\item Folgende Schritte befolgen, falls bereits eine 32-bit EasyDoEToolsuitev13\_1\_0.dll registriert wurde:
+		
+	\end{regDll}
+\end{regDll}
+
+\shorthandon{"}
+\end{document}
